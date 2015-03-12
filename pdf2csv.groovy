@@ -29,10 +29,12 @@ new PDFTextStripper().getText(doc).eachLine { line ->
 
 doc.close()
 
-@Field lineParsers = [visa: new VisaLineParser()]
+@Field lineParsers = [visa: new VisaLineParser(), galicia: new GaliciaLineParser()]
 def detectExpenseLine( line ) {
      // VISA HOME BANKING PDF FORMAT
     if(line =~ / \d\d \d\d\d\d\d\d/)
         return lineParsers.visa
 
+    if(line =~ /^[ ]+\d\d\.\d\d\.\d\d /)
+        return lineParsers.galicia
 }
